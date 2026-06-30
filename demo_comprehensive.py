@@ -37,7 +37,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 # ── Package import ────────────────────────────────────────────────────────
-sys.path.insert(0, '/tmp/qutip_rp_simulation')
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 from rp_sim.hamiltonian import (
     zeeman_hamiltonian, hyperfine_hamiltonian, exchange_hamiltonian,
     dipolar_hamiltonian, total_hamiltonian, singlet_state, triplet_states,
@@ -403,7 +403,7 @@ def phase_4_decoherence():
         result = rp_solve(H, rho0, k_S=0.05, k_T=0.005, t_max=5000, n_steps=2000,
                           T1=T1, e_ops=[P_S_op])
         P_S = result.expect[0]
-        phi_S = 0.05 * np.trapezoid(P_S, result.times)
+        phi_S = 0.05 * np.trapz(P_S, result.times)
         yields_T1.append(phi_S)
     
     # 4.2 T₂ dephasing sweep
@@ -415,7 +415,7 @@ def phase_4_decoherence():
         result = rp_solve(H, rho0, k_S=0.05, k_T=0.005, t_max=5000, n_steps=2000,
                           T2=T2, e_ops=[P_S_op])
         P_S = result.expect[0]
-        phi_S = 0.05 * np.trapezoid(P_S, result.times)
+        phi_S = 0.05 * np.trapz(P_S, result.times)
         yields_T2.append(phi_S)
     
     # 4.3 Combined decoherence analysis
@@ -662,14 +662,14 @@ def phase_6_publication_figure():
     for T1 in T1_vals:
         result = rp_solve(H_dec, rho0, k_S=0.05, k_T=0.005, t_max=5000, n_steps=2000,
                           T1=T1, e_ops=[P_S_pub])
-        yields_T1_pub.append(0.05 * np.trapezoid(result.expect[0], result.times))
+        yields_T1_pub.append(0.05 * np.trapz(result.expect[0], result.times))
     
     T2_vals = np.logspace(1.5, 4.5, 15)
     yields_T2_pub = []
     for T2 in T2_vals:
         result = rp_solve(H_dec, rho0, k_S=0.05, k_T=0.005, t_max=5000, n_steps=2000,
                           T2=T2, e_ops=[P_S_pub])
-        yields_T2_pub.append(0.05 * np.trapezoid(result.expect[0], result.times))
+        yields_T2_pub.append(0.05 * np.trapz(result.expect[0], result.times))
     
     # Panel D: Compass
     theta_d = np.linspace(0, np.pi, 35)

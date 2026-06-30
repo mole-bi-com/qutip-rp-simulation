@@ -218,7 +218,7 @@ def singlet_yield(H, rho0, k_S, k_T=0.0, T1=None, T2=None,
     result = rp_solve(H, rho0, k_S, k_T, t_max, n_steps,
                       T1=T1, T2=T2, e_ops=e_ops)
     
-    phi_S = k_S * np.trapezoid(result.expect[0], result.times)
+    phi_S = k_S * np.trapz(result.expect[0], result.times)
     
     return phi_S, result
 
@@ -235,7 +235,7 @@ def triplet_yield(H, rho0, k_S, k_T, t_max=10000.0, n_steps=5000):
     result = rp_solve(H, rho0, k_S, k_T, t_max, n_steps,
                       e_ops=[P_S, P_T])
     
-    phi_T = k_T * np.trapezoid(result.expect[1], result.times)
+    phi_T = k_T * np.trapz(result.expect[1], result.times)
     return phi_T, result
 
 
