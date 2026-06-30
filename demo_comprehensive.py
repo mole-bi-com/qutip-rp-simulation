@@ -266,17 +266,17 @@ def phase_3_anisotropy():
     
     # Anisotropic HFC tensors for FADH• (axial approximation)
     # |S⟩ has p_z orbital → stronger coupling along z
-    a_iso_A = [50.0]
-    a_aniso_A = [5.0]
-    
+    a_iso_A = [0.40]   # FADH• N5: 97 MHz ≈ 0.40 μeV
+    a_aniso_A = [0.05]
+
     hfc_A_aniso = []
     for a_iso, a_ani in zip(a_iso_A, a_aniso_A):
         tensor = np.diag([a_iso - a_ani, a_iso - a_ani, a_iso + 2*a_ani])
         hfc_A_aniso.append(tensor)
-    
+
     # Anisotropic HFC for Trp•
-    a_iso_B = [15.0]
-    a_aniso_B = [2.0]
+    a_iso_B = [0.28]   # TrpH⁺ Hβ1: 67 MHz ≈ 0.28 μeV
+    a_aniso_B = [0.03]
     
     hfc_B_aniso = []
     for a_iso, a_ani in zip(a_iso_B, a_aniso_B):
